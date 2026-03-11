@@ -1,2 +1,9 @@
 # DSA210-TermProject
-Term project for DSA210 – Introduction to Data Science at Sabancı University.
+
+Sabancı University  
+DSA210 – Introduction to Data Science  
+Spring 2026  
+
+Student: Efe Osmanağaoğlu 
+ID: 33979
+
