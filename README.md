@@ -1,6 +1,7 @@
-# DSA 210 Project: Evolution of Three-Point Shooting in the NBA
+# DSA 210 Project  
+## Evolution of Three-Point Shooting in the NBA  
 
-## Does the increase in three-point shooting reflect a structural change in NBA playing style over time?
+### Does the increase in three-point shooting reflect a structural change in NBA playing style over time?
 
 ---
 
@@ -35,7 +36,7 @@ This project aims to explore the rise of three-point shooting and examine whethe
 
 ## Research Question
 
-**How has three-point shooting evolved in the NBA over time, and does its increase reflect a structural change in overall playing style?**
+How has three-point shooting evolved in the NBA over time, and does its increase reflect a structural change in overall playing style?
 
 ---
 
@@ -57,20 +58,22 @@ This project aims to explore the rise of three-point shooting and examine whethe
 
 ## Data Sources
 
-### 1. Primary Dataset (Kaggle)
-**NBA 3-Point Shooting Data (1996–2020)**
+### Primary Dataset (Kaggle)  
+NBA 3-Point Shooting Data (1996–2020)
 
-This dataset contains season-level averages for:
-- `3PM`
-- `3PA`
-- `3P%`
-- `3-point share in total points`
+Includes:
+- 3PM  
+- 3PA  
+- 3P%  
+- Three-point share in total points  
 
-### 2. Secondary Dataset (NBA Official Website - Scraped)
-Additional season-level statistics will be collected from the NBA official website, such as:
-- Points per game
-- Pace
-- Additional shooting-related metrics
+### Secondary Dataset (NBA Official Website - Scraped)  
+Additional season-level statistics will be collected using Python-based web scraping techniques (`requests`, `pandas`), including:
+- Points per game  
+- Pace  
+- Additional shooting-related metrics  
+
+This dataset will be used to enrich the primary dataset.
 
 ---
 
@@ -81,12 +84,12 @@ The Kaggle dataset provides structured data on three-point shooting statistics a
 To enrich the analysis, additional season-level data will be scraped from the NBA official website. These variables, such as pace and total scoring, will help evaluate how three-point shooting relates to broader game dynamics.
 
 After collection, the datasets will be:
-- cleaned
-- standardized
-- merged by season
-- organized into a time-series structure
+- cleaned  
+- standardized  
+- merged by season  
+- organized into a time-series structure  
 
-The final dataset is expected to contain approximately **25–30 seasons** with multiple statistical features for each season.
+The final dataset is expected to contain approximately **25–30 seasons** and **6–8 statistical features per season**.
 
 ---
 
@@ -94,15 +97,17 @@ The final dataset is expected to contain approximately **25–30 seasons** with 
 
 The project will include:
 
-- **Time-series analysis** of `3PA`, `3P%`, and three-point scoring share
-- **Trend visualizations** across seasons
-- **Hypothesis testing** to evaluate whether changes are statistically significant
-- **Correlation and regression analysis** between three-point shooting and scoring-related variables
+- Time-series analysis of `3PA`, `3P%`, and three-point scoring share  
+- Trend visualizations across seasons  
+- Hypothesis testing to evaluate whether changes are statistically significant  
+- Correlation and linear regression analysis between three-point shooting and scoring-related variables  
+
+To assess whether a structural change exists, the analysis will compare different time periods (e.g., pre-2010 vs post-2015) and identify potential shifts or breakpoints in three-point shooting trends.
+
+Additionally, pace will be used as a control variable to distinguish whether increases in scoring are driven by faster gameplay or increased reliance on three-point shooting.
 
 ---
 
 ## Expected Outcome
 
 This project is expected to show that three-point shooting has become increasingly central to NBA offense and that this increase is associated with broader changes in the structure and tempo of the game.
-
----
