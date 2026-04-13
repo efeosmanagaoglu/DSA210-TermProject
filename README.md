@@ -31,6 +31,10 @@ The analysis is conducted at the league level to capture structural changes in b
 
 The NBA has undergone a major stylistic transformation with increasing reliance on three-point shooting. This project aims to determine whether this change is gradual or represents a fundamental structural shift in how the game is played.
 
+### Why this dataset?
+
+Three-point shooting is one of the most visible and measurable changes in modern basketball. Unlike subjective metrics, three-point statistics (attempts, makes, accuracy) are precisely recorded and publicly available. By combining shooting data from Kaggle with pace and scoring data from Basketball Reference, we can examine not just the three-point trend in isolation, but how it relates to broader changes in game tempo and scoring — giving us a more complete picture of the NBA's stylistic evolution.
+
 ---
 
 ## Research Question
@@ -80,12 +84,36 @@ Includes:
 
 ## Data Preparation
 
-- Data from Kaggle and Basketball Reference were combined
-- Cleaned and standardized column names
-- Merged using the `Season` column
-- Final dataset contains:
-  - 24 seasons
-  - 7 features
+The two raw datasets were combined using the following Python script:
+
+```python
+import pandas as pd
+
+# Load raw datasets
+df_3pt = pd.read_csv("DATA/raw/NBA_3Point_Shooting_Data.csv")
+df_extra = pd.read_csv("DATA/raw/nba_additional_stats_raw.csv")
+
+# Clean column names
+df_3pt.columns = df_3pt.columns.str.strip()
+df_extra.columns = df_extra.columns.str.strip()
+
+# Standardize season format
+df_extra["Season"] = df_extra["Season"].astype(str).str.strip()
+
+# Select relevant columns
+df_3pt = df_3pt[["Season", "3PM", "3PA", "3P_percent", "ThreePointShare"]]
+df_extra = df_extra[["Season", "PTS_per_game", "Pace"]]
+
+# Merge on Season
+df_final = pd.merge(df_3pt, df_extra, on="Season", how="inner")
+
+# Sort and save
+df_final = df_final.sort_values(by="Season").reset_index(drop=True)
+df_final.to_csv("DATA/processed/final_dataset.csv", index=False)
+```
+
+- Final dataset contains **24 seasons** (1996–2020) and **7 features**
+- No missing values after merge
 
 ---
 
@@ -110,11 +138,11 @@ The EDA includes:
 
 ### Key Findings
 
-- 3PA increases significantly over time  
-- Sharp acceleration after ~2015  
-- ThreePointShare steadily increases  
-- Points per game and pace also increase  
-- Strong positive correlation between 3PA and scoring  
+- **3PA doubled** from 16.8 (1996-97) to 34.1 (2019-20) attempts per game, with sharp acceleration after 2014-15
+- **ThreePointShare** grew from ~14% to ~33% — one-third of all points now come from three-pointers
+- **3P% remained stable** at ~35%, meaning the increase in volume did not reduce accuracy
+- **PTS per game** rose from ~95 to ~112; **Pace** increased from ~90 to ~100 possessions per game
+- **Strongest correlations:** 3PA vs PTS (r = 0.95), 3PA vs Pace (r = 0.93), 3PA vs ThreePointShare (r ≈ 1.00)
 
 ---
 
@@ -123,38 +151,50 @@ The EDA includes:
 ### Method
 
 - Dataset split into two eras:
-  - Early era (1996–2008)
-  - Modern era (2008–2020)
+  - **Early era (1996–2008):** 12 seasons
+  - **Modern era (2008–2020):** 12 seasons
 
-- Independent two-sample t-test applied:
-  - `ThreePointShare`
-  - `3PA`
+- **Welch's independent two-sample t-test** was used because:
+  - We are comparing means of two independent groups
+  - Welch's variant does not assume equal variances, making it more robust for our small sample sizes (n=12 per group)
 
 ---
 
 ### Results
 
-#### Test 1: ThreePointShare
-- p-value < 0.001  
-- Significant increase in modern era  
-- H₀ rejected  
+#### Test 1: ThreePointShare (Early vs Modern)
+| Metric | Value |
+|--------|-------|
+| Early era mean | 16.60% |
+| Modern era mean | 24.07% |
+| t-statistic | -4.8472 |
+| p-value | 0.000273 |
+| Cohen's d | 1.98 (very large) |
 
-#### Test 2: 3PA
-- p-value < 0.001  
-- Significant increase in attempts  
-- H₀ rejected  
+**Interpretation:** The modern era has a 7.47 percentage point higher three-point scoring share. With p = 0.000273 (far below 0.05), we reject H₀. The large Cohen's d (1.98) confirms this is a practically meaningful difference, not just a statistical artifact.
+
+#### Test 2: 3PA (Early vs Modern)
+| Metric | Value |
+|--------|-------|
+| Early era mean | 15.10 |
+| Modern era mean | 23.56 |
+| t-statistic | -4.9296 |
+| p-value | 0.000286 |
+| Cohen's d | 2.01 (very large) |
+
+**Interpretation:** Modern teams attempt 8.46 more three-pointers per game — a 56% increase. With p = 0.000286, we reject H₀. Cohen's d of 2.01 indicates an extremely large effect size.
 
 #### Correlation Analysis
-- Correlation (3PA vs PTS): ~0.95  
-- Strong positive relationship  
+- 3PA vs PTS_per_game: **r = 0.95** (very strong positive)
+- Three-point shooting volume is strongly associated with overall scoring
 
 ---
 
 ## Conclusion
 
-The results show that the increase in three-point shooting is not random but represents a statistically significant structural change in NBA playing style.
+The results show that the increase in three-point shooting is not random but represents a statistically significant structural change in NBA playing style (p < 0.001 for both tests, Cohen's d > 1.9).
 
-Modern NBA offenses rely heavily on three-point shooting, which is strongly associated with increased scoring and faster gameplay.
+Modern NBA offenses rely heavily on three-point shooting: the three-point share of scoring rose from 16.6% to 24.1%, and attempts increased by 56%. This shift is strongly associated with increased scoring (r = 0.95) and faster gameplay (r = 0.93), while three-point accuracy remained stable at ~35% — suggesting a deliberate strategic transformation rather than random variation.
 
 ---
 
