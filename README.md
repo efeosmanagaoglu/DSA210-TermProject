@@ -215,6 +215,7 @@ Goal:
 Methods:
 - Linear Regression
 - Ridge Regression
+- Random Forest Regressor
 
 Evaluation:
 - Leave-One-Out Cross-Validation (LOOCV)
@@ -231,6 +232,7 @@ Goal:
 Methods:
 - Logistic Regression
 - Decision Tree Classifier
+- Random Forest Classifier
 
 Evaluation:
 - Stratified cross-validation
@@ -244,6 +246,7 @@ Purpose:
 - They are appropriate for a **small dataset**
 - They are easy to interpret in a report
 - They connect directly to the project's core question about structural change
+- Tree-based models are used only as **lightweight benchmarks**, not as the main interpretive models
 
 ---
 
