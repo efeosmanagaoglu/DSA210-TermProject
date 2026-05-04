@@ -90,7 +90,7 @@ The two raw datasets were combined using the following Python script:
 import pandas as pd
 
 # Load raw datasets
-df_3pt = pd.read_csv("DATA/raw/NBA_3Point_Shooting_Data.csv")
+df_3pt = pd.read_excel("DATA/raw/NBA 3-Point Shooting Data (1996-2020).xlsx")
 df_extra = pd.read_csv("DATA/raw/nba_additional_stats_raw.csv")
 
 # Clean column names
@@ -98,7 +98,12 @@ df_3pt.columns = df_3pt.columns.str.strip()
 df_extra.columns = df_extra.columns.str.strip()
 
 # Standardize season format
+df_3pt["Season"] = df_3pt["Season"].astype(str).str.strip()
 df_extra["Season"] = df_extra["Season"].astype(str).str.strip()
+
+# Keep only the seasons used in this project
+project_seasons = df_3pt["Season"].unique()
+df_extra = df_extra[df_extra["Season"].isin(project_seasons)]
 
 # Select relevant columns
 df_3pt = df_3pt[["Season", "3PM", "3PA", "3P_percent", "ThreePointShare"]]
@@ -112,7 +117,7 @@ df_final = df_final.sort_values(by="Season").reset_index(drop=True)
 df_final.to_csv("DATA/processed/final_dataset.csv", index=False)
 ```
 
-- Final dataset contains **24 seasons** (1996–2020) and **7 features**
+- Final dataset contains **24 seasons** from **1996-97 to 2019-20** and **7 features**
 - No missing values after merge
 
 ---
@@ -190,6 +195,58 @@ The EDA includes:
 
 ---
 
+## Machine Learning Methods
+
+To extend the statistical analysis with machine learning, the project now includes a separate notebook:
+
+- `ML_Methods.ipynb`
+
+Because the dataset contains only **24 seasons**, the ML section focuses on **simple, interpretable models** and uses cross-validation to reduce overfitting risk.
+
+### ML Task 1: Regression
+
+Goal:
+- Predict `PTS_per_game` using:
+  - `3PA`
+  - `3P_percent`
+  - `ThreePointShare`
+  - `Pace`
+
+Methods:
+- Linear Regression
+- Ridge Regression
+
+Evaluation:
+- Leave-One-Out Cross-Validation (LOOCV)
+- RMSE, MAE, and R-squared
+
+Purpose:
+- Test whether three-point-related variables and pace can explain league scoring at the season level.
+
+### ML Task 2: Classification
+
+Goal:
+- Classify a season as **Early Era** or **Modern Era** based on league-wide playing style metrics.
+
+Methods:
+- Logistic Regression
+- Decision Tree Classifier
+
+Evaluation:
+- Stratified cross-validation
+- Accuracy, Precision, Recall, and F1-score
+
+Purpose:
+- Assess whether changes in shooting and pace are strong enough for a model to distinguish early and modern NBA seasons.
+
+### Why these methods?
+
+- They are appropriate for a **small dataset**
+- They are easy to interpret in a report
+- They connect directly to the project's core question about structural change
+
+---
+
 ## Conclusion
 
 The results show that the increase in three-point shooting is not random but represents a statistically significant structural change in NBA playing style (p < 0.001 for both tests, Cohen's d > 1.9).
@@ -209,6 +266,7 @@ Modern NBA offenses rely heavily on three-point shooting: the three-point share 
 │       └── final_dataset.csv
 ├── EDA.ipynb
 ├── Hypothesis_Testing.ipynb
+├── ML_Methods.ipynb
 ├── Proposal Report.pdf
 ├── requirements.txt
 └── README.md
@@ -250,6 +308,7 @@ Modern NBA offenses rely heavily on three-point shooting: the three-point share 
 3. Run the notebooks in order:
    - `EDA.ipynb` — Exploratory Data Analysis
    - `Hypothesis_Testing.ipynb` — Statistical hypothesis tests
+   - `ML_Methods.ipynb` — Machine learning applications
 
 ---
 
