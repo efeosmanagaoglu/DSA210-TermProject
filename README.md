@@ -7,6 +7,10 @@
 
 ## Overview
 
+Final submission documents:
+
+- `FINAL_REPORT.md`
+
 This project investigates the long-term evolution of three-point shooting in the NBA and examines whether the increase in three-point usage reflects a broader structural change in playing style.
 
 Over the past decades, the NBA has increasingly emphasized perimeter shooting, especially the three-point shot. This project analyzes how three-point shooting has evolved over time and whether this shift is associated with other game characteristics such as scoring patterns and pace.
@@ -270,6 +274,7 @@ Modern NBA offenses rely heavily on three-point shooting: the three-point share 
 ├── EDA.ipynb
 ├── Hypothesis_Testing.ipynb
 ├── ML_Methods.ipynb
+├── FINAL_REPORT.md
 ├── Proposal Report.pdf
 ├── requirements.txt
 └── README.md
@@ -290,7 +295,7 @@ Modern NBA offenses rely heavily on three-point shooting: the three-point share 
 ## Future Work
 
 - Add advanced metrics (e.g., offensive rating)
-- Apply machine learning models
+- Extend the machine learning section with richer historical features
 - Detect structural breakpoints more formally
 
 ---
@@ -312,6 +317,24 @@ Modern NBA offenses rely heavily on three-point shooting: the three-point share 
    - `EDA.ipynb` — Exploratory Data Analysis
    - `Hypothesis_Testing.ipynb` — Statistical hypothesis tests
    - `ML_Methods.ipynb` — Machine learning applications
+
+---
+
+## AI Usage Disclosure
+
+This project used AI assistance during development and documentation.
+
+The overall project idea, topic selection, research direction, and general project structure were developed by the student.
+
+AI tools were used mainly for supportive tasks such as:
+
+- improving and organizing code
+- helping generate or refine some code cells
+- helping generate or refine some plots and visual outputs
+- revising written explanations in the notebooks, README, and final report
+- checking consistency between repository files before submission
+
+All AI-supported code, figures, and text were reviewed, edited, and approved by the student before inclusion in the final submission.
 
 ---
 
